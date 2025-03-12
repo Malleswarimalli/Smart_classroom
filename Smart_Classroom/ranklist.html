@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rank List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        #header-container {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .content {
+            margin-top: 100px; /* Adjust margin to prevent content overlap */
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .rank-table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .top-rank {
+            font-weight: bold;
+            color: gold;
+        }
+
+        .second-rank {
+            font-weight: bold;
+            color: silver;
+        }
+
+        .third-rank {
+            font-weight: bold;
+            color: #cd7f32;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+    
+    <div class="content">
+        <h2>🏆 Student Performance Rankings</h2>
+        <table class="rank-table" border="1">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Student Name</th>
+                    <th>Quiz Score</th>
+                    <th>Coding Score</th>
+                    <th>Total Score</th>
+                </tr>
+            </thead>
+            <tbody id="rank-list">
+                <!-- Rank list will be generated here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+        
+        loadHeader();
+
+        let students = [
+            { name: "Aarav", quiz: 18, code: 30 },
+            { name: "Meera", quiz: 20, code: 28 },
+            { name: "Raj", quiz: 15, code: 25 },
+            { name: "Sita", quiz: 16, code: 22 },
+            { name: "Vikram", quiz: 12, code: 24 },
+            { name: "Neha", quiz: 10, code: 20 }
+        ];
+
+        students.forEach(s => s.total = s.quiz + s.code);
+        students.sort((a, b) => b.total - a.total);
+
+        let rankTable = document.getElementById("rank-list");
+
+        students.forEach((s, index) => {
+            let row = document.createElement("tr");
+            let rankClass = index === 0 ? "top-rank" : index === 1 ? "second-rank" : index === 2 ? "third-rank" : "";
+
+            row.innerHTML = `
+                <td class="${rankClass}">${index + 1}</td>
+                <td>${s.name}</td>
+                <td>${s.quiz}</td>
+                <td>${s.code}</td>
+                <td>${s.total}</td>
+            `;
+            rankTable.appendChild(row);
+        });
+    </script>
+</body>
+</html>

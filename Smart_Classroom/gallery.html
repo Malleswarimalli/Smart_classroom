@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Classroom Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Header container to load external header */
+        #header-container {
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            padding: 20px;
+        }
+
+        .content-container {
+            padding: 80px 20px 20px; /* Pushes content down to avoid overlap */
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .gallery-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            width: 250px;
+            height: 150px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .about-section {
+            margin-top: 40px;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .about-section h3 {
+            color: #4facfe;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div id="header-container"></div>
+
+    <div class="content-container">
+        <h2>Classroom Glimpse</h2>
+        <div class="gallery-container">
+            <div class="gallery-item floating"><img src="assets/classroom1.jpg" alt="Classroom 1"></div>
+            <div class="gallery-item floating"><img src="assets/classroom2.jpg" alt="Classroom 2"></div>
+            <div class="gallery-item floating"><img src="assets/classroom3.jpg" alt="Classroom 3"></div>
+        </div>
+
+        <div class="about-section">
+            <h3>About Our Monitoring System</h3>
+            <p>
+                Our AI-powered Classroom Monitoring System ensures real-time tracking of student attendance, engagement, 
+                and academic progress. The system uses <strong>facial recognition, emotion detection, and performance analysis</strong> 
+                to provide detailed insights into student learning patterns.
+            </p>
+            <p>
+                This application aims to enhance student participation, optimize teaching strategies, 
+                and create a <strong>smart and interactive learning environment</strong>.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Function to load the header from 'header.html' dynamically
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call the function to load header on page load
+        loadHeader();
+    </script>
+
+</body>
+</html>

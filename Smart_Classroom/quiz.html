@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz & Coding Challenge</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        /* Ensure content moves down */
+        #content {
+            margin-top: 80px; /* Adjust as needed to prevent overlap */
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .quiz-container, .coding-container {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .question {
+            font-weight: bold;
+        }
+
+        .options {
+            margin-top: 10px;
+        }
+
+        .options label {
+            display: block;
+            padding: 5px;
+        }
+
+        .submit-btn {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .editor-container {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .output-box {
+            background: #222;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div id="header-container"></div>
+
+    <!-- Main Content -->
+    <div id="content">
+        <h2>📝 Quiz & Coding Challenge</h2>
+
+        <!-- MCQ Quiz Section -->
+        <div class="quiz-container">
+            <h3>Multiple Choice Questions</h3>
+            <div class="question">1. What is the output of `print(2 * 3 ** 3)`?</div>
+            <div class="options">
+                <label><input type="radio" name="q1" value="18"> 18</label>
+                <label><input type="radio" name="q1" value="54"> 54</label>
+                <label><input type="radio" name="q1" value="162"> 162</label>
+            </div>
+
+            <div class="question">2. Which of these is NOT a programming language?</div>
+            <div class="options">
+                <label><input type="radio" name="q2" value="Python"> Python</label>
+                <label><input type="radio" name="q2" value="Java"> Java</label>
+                <label><input type="radio" name="q2" value="HTML"> HTML</label>
+            </div>
+
+            <button class="submit-btn" onclick="checkQuiz()">Submit Quiz</button>
+            <p id="quiz-result"></p>
+        </div>
+
+        <!-- Coding Challenge Section -->
+        <div class="coding-container">
+            <h3>💻 Coding Challenge</h3>
+            <p>Write a Python function to check if a number is even or odd.</p>
+
+            <label for="language">Choose Language:</label>
+            <select id="language">
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="c">C</option>
+            </select>
+
+            <div class="editor-container" id="editor"># Write your code here...</div>
+
+            <button class="submit-btn" onclick="runCode()">Run Code</button>
+            <pre class="output-box" id="output"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Load Header Function
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call function to load header on page load
+        loadHeader();
+
+        // Check Quiz Answers
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked')?.value;
+            let q2 = document.querySelector('input[name="q2"]:checked')?.value;
+
+            if (q1 === "54") score++;
+            if (q2 === "HTML") score++;
+
+            document.getElementById("quiz-result").innerText = `Your Score: ${score}/2`;
+        }
+
+        // Code Editor
+        let editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.session.setMode("ace/mode/python");
+
+        // Run Code Simulation (Client-side only)
+        function runCode() {
+            let language = document.getElementById("language").value;
+            let code = editor.getValue();
+            let outputBox = document.getElementById("output");
+
+            if (language === "python") {
+                try {
+                    let func = new Function(code + "\n return isEven(2);");
+                    let result = func();
+                    outputBox.innerText = "Output: " + result;
+                } catch (error) {
+                    outputBox.innerText = "Error: " + error.message;
+                }
+            } else {
+                outputBox.innerText = `This is a frontend simulator. \nServer execution is needed for ${language} code.`;
+            }
+        }
+    </script>
+</body>
+</html>

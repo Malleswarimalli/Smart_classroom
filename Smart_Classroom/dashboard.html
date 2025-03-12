@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        #header-container {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            color: white;
+            margin-top: 80px; /* Push content down to avoid header overlap */
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .subject-box {
+            background: white;
+            padding: 20px;
+            width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .subject-box:hover {
+            transform: scale(1.1);
+        }
+
+        .subject-box h3 {
+            margin: 10px 0;
+            color: #2c3e50;
+        }
+
+        .details-container {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-container {
+            margin-top: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress-bar {
+            width: 100%;
+            background: #ddd;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 50%;
+            background: #4ca1af;
+            text-align: center;
+            color: white;
+            line-height: 20px;
+            border-radius: 10px;
+        }
+
+        .logout-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Header Container -->
+    <div id="header-container"></div>
+
+    <h2>Student Dashboard</h2>
+
+    <div class="dashboard-container">
+        <div class="subject-box" onclick="showDetails('python')">
+            <h3>Python</h3>
+        </div>
+        <div class="subject-box" onclick="showDetails('c')">
+            <h3>C</h3>
+        </div>
+        <div class="subject-box" onclick="showDetails('java')">
+            <h3>Java</h3>
+        </div>
+    </div>
+
+    <div class="details-container" id="details-box">
+        <h3 id="subject-title"></h3>
+        <p id="subject-details"></p>
+    </div>
+
+    <div class="progress-container">
+        <h3>Class Progress</h3>
+        <div class="progress-bar">
+            <div class="progress" id="progress-percentage">50%</div>
+        </div>
+    </div>
+
+    <!-- Logout Button -->
+    <button onclick="logoutUser()" class="logout-btn">Logout</button>
+
+    <script>
+        // Function to load the header dynamically from 'header.html'
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call the function to load the header on page load
+        loadHeader();
+
+        function showDetails(subject) {
+            let details = {
+                python: "Python is a powerful programming language used for AI, web development, and data science.",
+                c: "C is a foundational programming language widely used in system programming and embedded systems.",
+                java: "Java is a versatile object-oriented language used for mobile apps, web applications, and enterprise solutions."
+            };
+
+            document.getElementById("subject-title").innerText = subject.toUpperCase();
+            document.getElementById("subject-details").innerText = details[subject];
+            document.getElementById("details-box").style.display = "block";
+        }
+
+        function logoutUser() {
+            localStorage.removeItem("loggedInUser"); // Remove stored user session
+            window.location.href = "login.html"; // Redirect to login page
+        }
+
+        // Redirect to login if not logged in
+        if (!localStorage.getItem("loggedInUser")) {
+            window.location.href = "login.html";
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Classroom Monitoring</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Header container to load external header */
+        #header-container {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            padding: 20px;
+        }
+
+        .content-container {
+            padding: 80px 20px 20px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .events-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .event-box {
+            width: 300px;
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .event-box:hover {
+            transform: scale(1.05);
+        }
+
+        .event-box h3 {
+            color: #ff758c;
+            margin-bottom: 5px;
+        }
+
+        .materials-section {
+            margin-top: 40px;
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .materials-section h3 {
+            color: #ff758c;
+        }
+
+        .materials-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .materials-list li {
+            margin: 10px 0;
+        }
+
+        .materials-list a {
+            text-decoration: none;
+            color: #ff758c;
+            font-weight: bold;
+        }
+
+        .materials-list a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header Section -->
+    <div id="header-container"></div>
+
+    <div class="content-container">
+        <h2>Upcoming Class Events</h2>
+        <div class="events-container">
+            <div class="event-box">
+                <h3>Python Programming</h3>
+                <p><b>Date:</b> March 15, 2025</p>
+                <p><b>Time:</b> 10:00 AM - 12:00 PM</p>
+                <p><b>Instructor:</b> Dr. Smith</p>
+            </div>
+
+            <div class="event-box">
+                <h3>Machine Learning Basics</h3>
+                <p><b>Date:</b> March 17, 2025</p>
+                <p><b>Time:</b> 2:00 PM - 4:00 PM</p>
+                <p><b>Instructor:</b> Prof. Johnson</p>
+            </div>
+
+            <div class="event-box">
+                <h3>Data Science Applications</h3>
+                <p><b>Date:</b> March 20, 2025</p>
+                <p><b>Time:</b> 9:00 AM - 11:00 AM</p>
+                <p><b>Instructor:</b> Dr. Brown</p>
+            </div>
+        </div>
+
+        <div class="materials-section">
+            <h3>Study Materials</h3>
+            <ul class="materials-list">
+                <li>📚 <a href="assets/python_notes.pdf" download>Python Programming Notes</a></li>
+                <li>📚 <a href="assets/ml_basics.pdf" download>Machine Learning Basics</a></li>
+                <li>📚 <a href="assets/data_science.pdf" download>Data Science Guide</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Function to load the header from 'header.html' dynamically
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call the function to load header on page load
+        loadHeader();
+    </script>
+
+</body>
+</html>

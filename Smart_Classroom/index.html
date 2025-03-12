@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Classroom Monitoring</title>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let isLoggedIn = sessionStorage.getItem("isLoggedIn"); 
+
+            if (!isLoggedIn) {
+                window.location.href = "login.html"; // Redirect to login if not logged in
+            }
+
+            let username = sessionStorage.getItem("username");
+            if (username) {
+                document.getElementById("welcomeUser").innerText = "Welcome, " + username + "!";
+            }
+        });
+
+        function logoutUser() {
+            sessionStorage.removeItem("isLoggedIn");
+            sessionStorage.removeItem("username");
+            window.location.href = "login.html";  // Redirect to login page
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #4A00E0, #8E2DE2);
+            text-align: center;
+            color: white;
+        }
+
+        header {
+            background: linear-gradient(to right, #4A00E0, #8E2DE2);
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            margin-top: 70px; /* Added margin to push nav below the fixed header */
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #FFD700;
+        }
+
+        .container {
+            margin: 100px auto 30px; /* Added top margin to ensure content is visible below header */
+            width: 80%;
+            padding: 20px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content h2 {
+            font-size: 28px;
+            color: #4A00E0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 20px;
+            margin: 10px;
+            font-size: 18px;
+            text-decoration: none;
+            color: white;
+            background: #6a11cb;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #2575fc;
+        }
+
+        .logout-btn {
+            background: red;
+            padding: 10px 15px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .logout-btn:hover {
+            background: darkred;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Smart Classroom Monitoring System</header>
+
+    <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="attendance.html">Attendance</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="events.html">Events</a>
+        <a href="performance.html">Performance</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="ranklist.html">Rank List</a>
+        <a href="student_list.html">Student List</a>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <h2 id="welcomeUser">📌 Welcome to Smart Classroom Monitoring System</h2>
+            <p>Empowering students and staff with real-time monitoring, assessment, and performance tracking.</p>
+
+            <button class="logout-btn" onclick="logoutUser()">Logout</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2025 Smart Classroom Monitoring System | Developed by Malleswari
+    </div>
+
+</body>
+</html>

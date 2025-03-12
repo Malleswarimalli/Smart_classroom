@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #36D1DC, #5B86E5);
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        #header-container {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .content {
+            margin-top: 100px; /* Push content down to prevent overlap with header */
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .search-box {
+            width: 60%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .student-table {
+            width: 90%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: center;
+        }
+
+        th {
+            background: #1e3799;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        tr:hover {
+            background: #d1e7ff;
+            transition: 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+    <div class="content">
+        <h2>📋 Student List</h2>
+        <input type="text" class="search-box" id="search" placeholder="🔍 Search student by name..." onkeyup="filterStudents()">
+        <table class="student-table" border="1">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Performance</th>
+                </tr>
+            </thead>
+            <tbody id="student-list">
+                <!-- Student list will be dynamically generated here -->
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        loadHeader();
+
+        let students = [
+            { id: "S101", name: "Aarav", dept: "CSE", performance: "Excellent" },
+            { id: "S102", name: "Meera", dept: "IT", performance: "Good" },
+            { id: "S103", name: "Raj", dept: "ECE", performance: "Average" },
+            { id: "S104", name: "Sita", dept: "EEE", performance: "Excellent" },
+            { id: "S105", name: "Vikram", dept: "MECH", performance: "Good" }
+        ];
+
+        let studentTable = document.getElementById("student-list");
+
+        function loadStudents() {
+            studentTable.innerHTML = "";
+            students.forEach(s => {
+                let row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${s.id}</td>
+                    <td>${s.name}</td>
+                    <td>${s.dept}</td>
+                    <td>${s.performance}</td>
+                `;
+                studentTable.appendChild(row);
+            });
+        }
+
+        function filterStudents() {
+            let searchText = document.getElementById("search").value.toLowerCase();
+            let rows = document.querySelectorAll("#student-list tr");
+
+            rows.forEach(row => {
+                let name = row.cells[1].textContent.toLowerCase();
+                row.style.display = name.includes(searchText) ? "" : "none";
+            });
+        }
+
+        loadStudents();
+    </script>
+</body>
+</html>

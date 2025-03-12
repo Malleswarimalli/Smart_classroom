@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Monitoring</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        /* Ensure header container takes the same background */
+        #header-container {
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            padding: 20px;
+        }
+
+        .content-container {
+            padding: 80px 20px 20px; /* Pushes content down */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #ff5e62;
+            color: white;
+        }
+
+        .mark-btn {
+            padding: 8px 15px;
+            background: #ff5e62;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .mark-btn:hover {
+            background: #d44b4b;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div id="header-container"></div>
+
+    <div class="content-container">
+        <h2>Student Attendance</h2>
+
+        <div class="info-box">
+            <p><strong>Name:</strong> <span id="student-name">John Doe</span></p>
+            <p><strong>Department:</strong> <span id="student-department">Computer Science</span></p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Class Time</th>
+                    <th>Subject</th>
+                    <th>Section</th>
+                    <th>Exit Time</th>
+                    <th>Mark Attendance</th>
+                </tr>
+            </thead>
+            <tbody id="attendance-table">
+                <!-- Sample Row -->
+                <tr>
+                    <td>2025-03-10</td>
+                    <td>10:00 AM</td>
+                    <td>Python</td>
+                    <td>A</td>
+                    <td>12:00 PM</td>
+                    <td><button class="mark-btn" onclick="markAttendance(this)">Mark</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function markAttendance(button) {
+            button.innerText = "Present";
+            button.style.background = "#28a745";
+            button.style.cursor = "default";
+            button.disabled = true;
+        }
+
+        // Function to load the header from 'header.html' dynamically
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call the function to load header on page load
+        loadHeader();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: white;
+        }
+
+        #header-container {
+            width: 100%;
+            background: white;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .content {
+            padding: 20px;
+            margin-top: 80px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .performance-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top:40px;
+        }
+
+        .progress-box {
+            width: 80%;
+            max-width: 500px;
+            background: white;
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 20px;
+            border-radius: 5px;
+            background: #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .chart-container {
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+    
+    <div class="content">
+        <h2>📊 Student Performance</h2>
+        <div class="performance-container">
+            <div class="progress-box">
+                <h3>Attendance</h3>
+                <div class="progress-bar">
+                    <div id="attendance-progress" class="progress" style="background: #4CAF50; width: 0%;"></div>
+                </div>
+                <p id="attendance-text"></p>
+            </div>
+
+            <div class="progress-box">
+                <h3>Quiz Marks</h3>
+                <div class="progress-bar">
+                    <div id="quiz-progress" class="progress" style="background: #FF9800; width: 0%;"></div>
+                </div>
+                <p id="quiz-text"></p>
+            </div>
+
+            <div class="chart-container">
+                <h3>Overall Performance Chart</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to load the header from 'header.html' dynamically
+        function loadHeader() {
+            fetch("header.html")
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("header-container").innerHTML = data;
+                })
+                .catch(error => console.error("Error loading header:", error));
+        }
+
+        // Call the function to load header on page load
+        loadHeader();
+
+        // Simulated Data (This should be fetched dynamically)
+        let attendancePercentage = 85; // Example: 85% Attendance
+        let quizMarks = 75; // Example: 75% Quiz Score
+
+        // Set Progress Bars
+        document.getElementById("attendance-progress").style.width = attendancePercentage + "%";
+        document.getElementById("attendance-text").innerText = "Attendance: " + attendancePercentage + "%";
+
+        document.getElementById("quiz-progress").style.width = quizMarks + "%";
+        document.getElementById("quiz-text").innerText = "Quiz Marks: " + quizMarks + "%";
+
+        // Performance Chart
+        var ctx = document.getElementById("performanceChart").getContext("2d");
+        new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["Attendance", "Quiz Marks"],
+                datasets: [{
+                    data: [attendancePercentage, quizMarks],
+                    backgroundColor: ["#4CAF50", "#FF9800"],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: "bottom" }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
